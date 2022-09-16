@@ -3,20 +3,19 @@
   <head>
     <title><%= full_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all',
+                               'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application',
+                               'data-turbolinks-track': 'reload' %>
+    <%= render 'layouts/shim' %>
   </head>
-
   <body>
-    <header>
-      <div class="header-logo">
-        <a href="/">TOP</a>
-      </div>
-      <ul class="header-menus">
-        <li><%= link_to "このアプリについて", about_path %></li>
-      </ul>
-    </header>
-    <%= yield %>
+    <%= render 'layouts/header' %>
+    <div>
+      <% flash.each do |message_type, msg| %>
+        <div class="alert alert-<%= message_type %>"><%= msg %></div>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>
