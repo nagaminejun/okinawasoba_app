@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails',        '5.1.6'
+gem 'rails-i18n' # 今回はこのgemを追加しています。
 gem 'bcrypt'
 gem 'bootstrap-sass'
 gem 'puma',         '3.9.1'
