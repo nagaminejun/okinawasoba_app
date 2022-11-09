@@ -1,0 +1,29 @@
+<div class="main posts-show">
+  <div class="container">
+    <div class="posts-show-item">
+      <div class="post-left">
+        <div class="post-user-name">
+          <p>投稿者：<%= link_to @user.name, user_path(@user) %></p>
+        </div>
+        <p>投稿日：<%= l @post.created_at, format: :long %></p>
+        <p>店舗名：<%= @post.store_name %></p>
+        <p>メニュー名：<%= @post.menu %></p>
+        <p>料金：<%= @post.price %>円</p>
+        <p>コメント：<%= @post.comment %></p>
+        <% if current_user?(@user) %>
+          <%= link_to "編集", edit_user_post_path(@user, @post), class: "btn btn-success" %>
+          <%= link_to "削除", user_post_url(@user, @post), method: :delete,
+                  data: { confirm: "投稿を削除します。よろしいですか？" }, class: "btn btn-danger" %>
+        <% end %>
+      </div>
+      <div class="post-right">
+        <p>画像</p>
+        <% if @post.image.present? %>
+          <%= image_tag "/post_#{@post.id}.png" %>
+        <% else %>
+          <%= image_tag "/default.png" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

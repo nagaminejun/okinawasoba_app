@@ -1,27 +1,20 @@
-<% provide(:title, @user.name) %>
+<% provide(:title, '投稿一覧') %>
 
 
-<div class="main user-show">
+<div class="main posts-index">
+  <h1>投稿一覧</h1>
   <div class="container">
-    <div class="user">
-      <h1><%= @user.name %></h1>
-      <p><%= @user.email %></p>
-    </div>
     <table class="table">
-      <% @user.posts.each do |post| %>
+      <tbody>
+      <% @posts.each do |post| %>
         <div class="posts-index-item">
-          <div class="post-left">
+          <div class="post-index-left">
             投稿日：<%= l(post.created_at, format: :long) %><br>
             投稿者：<%= link_to(post.user.name, "/users/#{post.user.id}") %><br>
             店舗名：<%= link_to(post.store_name, "/users/#{post.user_id}/posts/#{post.id}") %><br> <!-- 遷移先のurl記述に苦労した！「/」ないだけでおかしくなる！ -->
             メニュー名：<%= post.menu %><br>
             料金：<%= post.price %>円<br>
             コメント：<%= post.comment %><br>
-            <% if current_user?(@user) %>
-              <%= link_to "編集", edit_user_post_path(@user, post.id), class: "btn btn-success" %>
-              <%= link_to "削除", user_post_url(@user, post.id), method: :delete,
-                    data: { confirm: "「」を削除します。よろしいですか？" }, class: "btn btn-danger" %>
-            <% end %>
           </div>
           <div class="post-right">
             <% if post.image.present? %>
@@ -30,9 +23,9 @@
               <%= image_tag "/default.png" %>
             <% end %>
           </div>
-          
         </div>
       <% end %>
+      </tbody>
     </table>
   </div>
 </div>

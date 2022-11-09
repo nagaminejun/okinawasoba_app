@@ -4,9 +4,16 @@
     <title><%= yield(:title) %> | AttendanceApp</title>
   </head>
 </html>
-<div class="top-main">
-  <div class="top-message">
-    <h2>沖縄そば投稿アプリ</h2>
-    <%= link_to "ユーザー登録", signup_path, class: "btn btn-lg btn-primary" %>
+<div class="row">
+  <div class="top-main">
+    <div class="top-message">
+      <h2>沖縄そば投稿アプリ</h2>
+      <% if logged_in? %>
+        <%= link_to "ログアウト", logout_path, method: :delete, class: "btn btn-danger" %>
+      <% else %>
+        <%= link_to "ユーザー登録", signup_path, class: "btn btn-lg btn-primary" %>
+        <%= link_to "ログイン", login_path, class: "btn btn-success" %>
+      <% end %>
+    </div>
   </div>
 </div>

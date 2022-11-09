@@ -4,7 +4,11 @@
 /* universal */
 
 body {
-  padding-top: 50px;
+  padding-top: 60px;
+}
+
+.row {
+  margin-top: -20px;
 }
 
 section {
@@ -23,6 +27,16 @@ textarea {
   margin-bottom: 10px;
 }
 
+.label-form {
+  margin-top: 5px;
+}
+
+
+
+.btn-form {
+  margin-top: 10px;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -34,6 +48,7 @@ h1 {
   letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;
+  line-height: 3;
 }
 
 h2 {
@@ -52,6 +67,10 @@ p {
 
 /* header */
 
+.navbar {
+  border-width: 3px 15px 1px;
+}
+
 #logo {
   float: left;
   margin-right: 10px;
@@ -66,6 +85,10 @@ p {
 #logo:hover {
   color: #fff;
   text-decoration: none;
+}
+
+.alert-success {
+  margin-top: -6px;
 }
 
 /* error_messages */
