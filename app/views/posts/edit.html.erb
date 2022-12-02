@@ -6,19 +6,19 @@
     <%= form_with(model: @post, url: user_post_path(@user), local: true, method: :patch) do |f| %>
       <%= render partial: 'shared/error_messages', locals: { obj: @post } %>
     
-      <%= f.label :store_name, class: "label-form" %>
+      <%= f.label :store_name, "店舗名", class: "label-form" %>
       <%= f.text_field :store_name, class: "form-control" %>
       
-      <%= f.label :menu, class: "label-form" %>
+      <%= f.label :menu, "メニュー", class: "label-form" %>
       <%= f.text_field :menu, class: "form-control" %>
       
-      <%= f.label :price, class: "label-form" %>
+      <%= f.label :price, "料金", class: "label-form" %>
       <%= f.number_field :price, class: "form-control" %>
       
-      <%= f.label :comment, class: "label-form" %>
+      <%= f.label :comment, "コメント", class: "label-form" %>
       <%= f.text_area :comment, rows: 5, class: "form-control" %>
       
-      <%= f.label :image, class: "label-form" %>
+      <%= f.label :image, "画像", class: "label-form" %>
       <%= f.file_field :image %>
       
       <%= f.submit "更新", class: "btn btn-lg btn-primary btn-form" %>
