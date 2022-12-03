@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_user, only:[:create, :new, :edit, :update, :destroy]
-  before_action :correct_user
+  before_action :correct_user, only:[:new, :edit]
   
   def new
     #debugger
