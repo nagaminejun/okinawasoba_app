@@ -42,7 +42,7 @@ class LineLoginApiController < ApplicationController
                 redirect_to root_path and return
             else
                 flash[:success] = 'Lineログインに失敗しました'
-                redirect_to root_path
+                render :new #redirect_to root_path
             end
 
         else
