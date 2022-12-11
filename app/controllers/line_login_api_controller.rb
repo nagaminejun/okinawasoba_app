@@ -35,7 +35,7 @@ class LineLoginApiController < ApplicationController
             if  line_user_id == user.line_user_id
                 #user.save?
                 #user.save
-                user = User.find(1)
+                #user = User.find(1)
                 log_in (user)
                 session[:user_id] = user.id
                 flash[:success] = "Lineでログインしました"
