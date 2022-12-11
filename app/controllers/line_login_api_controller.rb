@@ -25,7 +25,7 @@ class LineLoginApiController < ApplicationController
     end
 
     def callback
-        #debugger
+        debugger
         # CSRF対策のトークンが一致する場合のみ、ログイン処理を続ける
         if params[:state] == session[:state]
 
@@ -35,7 +35,7 @@ class LineLoginApiController < ApplicationController
             if  line_user_id == user.line_user_id
                 #user.save?
                 #user.save
-                #user = User.find(1)
+                user = User.find(1)
                 log_in (user)
                 session[:user_id] = user.id
                 flash[:success] = "Lineでログインしました"
