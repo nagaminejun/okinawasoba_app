@@ -4,7 +4,6 @@ class LineLoginApiController < ApplicationController
     require 'securerandom'
 
     def login
-#debugger
         # CSRF対策用の固有な英数字の文字列
         # ログインセッションごとにWebアプリでランダムに生成する
         session[:state] = SecureRandom.urlsafe_base64
@@ -20,18 +19,15 @@ class LineLoginApiController < ApplicationController
         scope = 'profile%20openid' #ユーザーに付与を依頼する権限
 
         authorization_url = "#{base_authorization_url}?response_type=#{response_type}&client_id=#{client_id}&redirect_uri=#{redirect_uri}&state=#{state}&scope=#{scope}"
-
         redirect_to authorization_url, allow_other_host: true
     end
 
     def callback
-        debugger
         # CSRF対策のトークンが一致する場合のみ、ログイン処理を続ける
         if params[:state] == session[:state]
 
         line_user_id = get_line_user_id(params[:code])
         user = User.find_or_initialize_by(line_user_id: line_user_id)
-#debugger
             if  line_user_id == user.line_user_id
                 #user.save?
                 #user.save
