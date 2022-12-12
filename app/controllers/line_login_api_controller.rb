@@ -27,7 +27,7 @@ class LineLoginApiController < ApplicationController
         if params[:state] == session[:state]
 
         line_user_id = get_line_user_id(params[:code])
-        user = User.find_or_initialize_by(line_user_id: line_user_id)
+        user = User.find_by(line_user_id: line_user_id)#User.find_or_initialize_by(line_user_id: line_user_id)
             if  line_user_id == user.line_user_id
                 #user.save?
                 #user.save
@@ -38,7 +38,7 @@ class LineLoginApiController < ApplicationController
                 redirect_to root_path and return
             else
                 flash[:success] = 'Lineログインに失敗しました'
-                render :new #redirect_to root_path
+                redirect_to root_path
             end
 
         else
