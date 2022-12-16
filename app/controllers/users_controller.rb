@@ -20,10 +20,18 @@ class UsersController < ApplicationController
   
   def create
     @user = User.new(user_params)
+    #debugger
     if @user.save
+      @user.update_attributes(line_user_id: session[:line_user_id])
       log_in @user # 保存成功後、ログインします。
-      flash[:success] = '新規作成に成功しました。'
-      redirect_to @user
+      #debugger
+      if @user.line_user_id.present?
+        flash[:success] = 'Lineログインで新規作成しました。'
+        redirect_to @user 
+      else
+        flash[:success] = '新規作成に成功しました。'
+        redirect_to @user
+      end
     else
       render :new
     end
@@ -50,7 +58,7 @@ class UsersController < ApplicationController
   private
     
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :line_user_id)
     end
     
     # beforeフィルター

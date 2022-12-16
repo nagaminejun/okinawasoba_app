@@ -14,7 +14,7 @@ class LineLoginApiController < ApplicationController
         base_authorization_url = 'https://access.line.me/oauth2/v2.1/authorize'
         response_type = 'code'
         client_id = '1657559843' #LINEログインチャネルのチャネルID、本番環境では環境変数などに保管する
-        redirect_uri = CGI.escape('https://shielded-chamber-20925.herokuapp.com/line_login_api/callback') #CGI.escape(line_login_api_callback_url)
+        redirect_uri = CGI.escape('https://b83d-203-138-116-254.jp.ngrok.io/line_login_api/callback') #CGI.escape(line_login_api_callback_url)
         state = session[:state]
         scope = 'profile%20openid' #ユーザーに付与を依頼する権限
 
@@ -28,19 +28,28 @@ class LineLoginApiController < ApplicationController
         if params[:state] == session[:state]
 
         line_user_id = get_line_user_id(params[:code])
+        #debugger
         user = User.find_by(line_user_id: line_user_id)#User.find_or_initialize_by(line_user_id: line_user_id)
+        #debugger
             if  user.present?
+                #debugger
               if  line_user_id == user.line_user_id
-                #user.save?
-                #user.save
-                #user = User.find(1)
                 log_in (user)
                 session[:user_id] = user.id
                 flash[:success] = "Lineでログインしました"
                 redirect_to root_path and return
               else
-                flash[:success] = 'Lineログインに失敗しました'
-                redirect_to root_path
+                #@user = User.new(line_user_id: @line_user_id)
+                #debugger
+                #@user.save
+                session[:line_user_id] = line_user_id
+                flash[:success] = "ユーザー情報を新規作成してください"
+                redirect_to line_login_api_new_path
+                #debugger
+                #@user = User.create(name: "test-#{+1}", email: "test-#{+1}@email.com", password: "password",  password_confirmation: "password", line_user_id: line_user_id)
+                #log_in @user
+                #flash[:success] = 'Lineログインし、ユーザー新規作成しました。初期パスワードは「password」です。'
+                #redirect_back_or @user #redirect_to root_path 
               end
             else
                 flash[:success] = 'Lineログインに失敗しました'
@@ -53,7 +62,16 @@ class LineLoginApiController < ApplicationController
 
     end
 
+    def new
+        #debugger
+        @user = User.new
+    end
+
     private
+
+    def user_params
+        params.require(:user).permit(:name, :email, :password, :password_confirmation, :line_user_id)
+    end
 
     def get_line_user_id(code)
 
@@ -92,7 +110,7 @@ class LineLoginApiController < ApplicationController
         # https://developers.line.biz/ja/reference/line-login/#issue-access-token
 
         url = 'https://api.line.me/oauth2/v2.1/token'
-        redirect_uri = 'https://shielded-chamber-20925.herokuapp.com/line_login_api/callback' #line_login_api_callback_url
+        redirect_uri = 'https://b83d-203-138-116-254.jp.ngrok.io/line_login_api/callback' #line_login_api_callback_url
 
         options = {
         headers: {
