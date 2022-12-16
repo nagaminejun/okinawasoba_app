@@ -14,7 +14,7 @@ class LineLoginApiController < ApplicationController
         base_authorization_url = 'https://access.line.me/oauth2/v2.1/authorize'
         response_type = 'code'
         client_id = '1657559843' #LINEログインチャネルのチャネルID、本番環境では環境変数などに保管する
-        redirect_uri = CGI.escape('https://shielded-chamber-20925.herokuapp.com/line_login_api/callback') #CGI.escape(line_login_api_callback_url)
+        redirect_uri = CGI.escape('https://b83d-203-138-116-254.jp.ngrok.io/line_login_api/callback') #CGI.escape(line_login_api_callback_url)
         state = session[:state]
         scope = 'profile%20openid' #ユーザーに付与を依頼する権限
 
@@ -39,6 +39,10 @@ class LineLoginApiController < ApplicationController
                 flash[:success] = "Lineでログインしました"
                 redirect_to root_path and return
               else
+                flash[:success] = 'Lineログインに失敗しました'
+                redirect_to root_path
+              end
+            else
                 #@user = User.new(line_user_id: @line_user_id)
                 #debugger
                 #@user.save
@@ -51,13 +55,13 @@ class LineLoginApiController < ApplicationController
                 #flash[:success] = 'Lineログインし、ユーザー新規作成しました。初期パスワードは「password」です。'
                 #redirect_back_or @user #redirect_to root_path 
               end
-            else
-                flash[:success] = 'Lineログインに失敗しました'
-                redirect_to root_path
-            end
+            #else
+                #flash[:success] = 'Lineログインに失敗しました'
+                #redirect_to root_path
+            #end
 
         else
-        redirect_to root_path, notice: '不正なアクセスです'
+        redirect_to root_path, notice: 'Lineログインに失敗しました'
         end
 
     end
@@ -110,7 +114,7 @@ class LineLoginApiController < ApplicationController
         # https://developers.line.biz/ja/reference/line-login/#issue-access-token
 
         url = 'https://api.line.me/oauth2/v2.1/token'
-        redirect_uri = 'https://shielded-chamber-20925.herokuapp.com/line_login_api/callback' #line_login_api_callback_url
+        redirect_uri = 'https://b83d-203-138-116-254.jp.ngrok.io/line_login_api/callback' #line_login_api_callback_url
 
         options = {
         headers: {
