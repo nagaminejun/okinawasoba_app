@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'line_login_api/login', to: 'line_login_api#login'
   get 'line_login_api/callback', to: 'line_login_api#callback'
   get 'line_login_api/new', to: 'line_login_api#new'
+  get 'line_login_api/create', to: 'line_login_api#create'
   
   resources :users do
     resources :posts

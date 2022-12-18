@@ -18,16 +18,17 @@ class UsersController < ApplicationController
     #@post = Post.find(params[:id])
   end
   
-  def create
+  def create ##User
     @user = User.new(user_params)
-    #debugger
+    debugger
     if @user.save
-      @user.update_attributes(line_user_id: session[:line_user_id])
+      #@user.update_attributes(line_user_id: @line_user_id)
       log_in @user # 保存成功後、ログインします。
       #debugger
       if @user.line_user_id.present?
         flash[:success] = 'Lineログインで新規作成しました。'
         redirect_to @user 
+        #session.delete(:line_user_id)
       else
         flash[:success] = '新規作成に成功しました。'
         redirect_to @user
