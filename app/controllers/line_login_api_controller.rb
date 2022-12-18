@@ -30,7 +30,7 @@ class LineLoginApiController < ApplicationController
         line_user_id = get_line_user_id(params[:code])
         #debugger
         user = User.find_by(line_user_id: line_user_id)#User.find_or_initialize_by(line_user_id: line_user_id)
-        debugger
+        #debugger
             if  user.present?
                 #debugger
               if  line_user_id == user.line_user_id
@@ -61,14 +61,14 @@ class LineLoginApiController < ApplicationController
 
     def new
         @user = User.new
-        debugger
+        #debugger
         @line_user_id = params[:line_user_id]
     end
 
     def create
         ###
         user = User.new(user_params)
-        debugger
+        #debugger
         if user.save
         user.update_attributes(line_user_id: line_user_id)
         log_in @user # 保存成功後、ログインします。

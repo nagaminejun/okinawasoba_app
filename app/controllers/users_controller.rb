@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   
   def create ##User
     @user = User.new(user_params)
-    debugger
+    #debugger
     if @user.save
       #@user.update_attributes(line_user_id: @line_user_id)
       log_in @user # 保存成功後、ログインします。
