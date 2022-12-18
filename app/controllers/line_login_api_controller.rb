@@ -14,7 +14,7 @@ class LineLoginApiController < ApplicationController
         base_authorization_url = 'https://access.line.me/oauth2/v2.1/authorize'
         response_type = 'code'
         client_id = '1657559843' #LINEログインチャネルのチャネルID、本番環境では環境変数などに保管する
-        redirect_uri = CGI.escape('https://shielded-chamber-20925.herokuapp.com') #CGI.escape(line_login_api_callback_url)
+        redirect_uri = CGI.escape('https://shielded-chamber-20925.herokuapp.com/line_login_api/callback') #CGI.escape(line_login_api_callback_url)
         state = session[:state]
         scope = 'profile%20openid' #ユーザーに付与を依頼する権限
 
@@ -35,7 +35,6 @@ class LineLoginApiController < ApplicationController
                 #debugger
               if  line_user_id == user.line_user_id
                 log_in (user)
-                session[:user_id] = user.id
                 flash[:success] = "Lineでログインしました"
                 redirect_to root_path and return
               else
@@ -65,26 +64,26 @@ class LineLoginApiController < ApplicationController
         @line_user_id = params[:line_user_id]
     end
 
-    def create
+    #def create
         ###
-        user = User.new(user_params)
+        #user = User.new(user_params)
         #debugger
-        if user.save
-        user.update_attributes(line_user_id: line_user_id)
-        log_in @user # 保存成功後、ログインします。
+        #if user.save
+        #user.update_attributes(line_user_id: line_user_id)
+        #log_in @user # 保存成功後、ログインします。
         #debugger
-        if user.line_user_id.present?
-            flash[:success] = 'Lineログインで新規作成しました。'
-            redirect_to user 
-            session.delete(:line_user_id)
-        else
-            flash[:success] = '新規作成に成功しました。'
-            redirect_to user
-        end
-        else
-        render :new
-        end
-    end
+        #if user.line_user_id.present?
+            #flash[:success] = 'Lineログインで新規作成しました。'
+            #redirect_to user 
+            #session.delete(:line_user_id)
+        #else
+            #flash[:success] = '新規作成に成功しました。'
+            #redirect_to user
+        #end
+        #else
+        #render :new
+        #end
+    #end
 
     private
 
@@ -129,7 +128,7 @@ class LineLoginApiController < ApplicationController
         # https://developers.line.biz/ja/reference/line-login/#issue-access-token
 
         url = 'https://api.line.me/oauth2/v2.1/token'
-        redirect_uri = 'https://shielded-chamber-20925.herokuapp.com' #line_login_api_callback_url
+        redirect_uri = 'https://shielded-chamber-20925.herokuapp.com/line_login_api/callback' #line_login_api_callback_url
 
         options = {
         headers: {
